@@ -333,8 +333,9 @@
                 
                 for(const filename of csvFiles){
                     try{
-                        // 強制使用相對路徑，避免從其他網站載入
-                        const url = new URL(filename, window.location.origin);
+                        // 以當前頁面所在資料夾為基準（支援 GitHub Pages 子路徑）
+                        const base = new URL('.', document.baseURI);
+                        const url = new URL(filename, base);
                         console.log(`嘗試載入: ${url.toString()}`);
                         
                         const resp = await fetch(url, { 
